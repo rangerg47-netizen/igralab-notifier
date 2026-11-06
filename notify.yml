@@ -1,0 +1,26 @@
+name: ИграЛаб — уведомления
+
+on:
+  schedule:
+    - cron: '*/10 * * * *'   # раз в 10 минут (GitHub может задерживать запуск)
+  workflow_dispatch:          # ручной запуск кнопкой «Run workflow»
+
+concurrency:
+  group: notify
+  cancel-in-progress: false
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm install --omit=dev --no-audit --no-fund
+      - run: node once.js
+        env:
+          FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+          ADMIN_EMAILS: ${{ secrets.ADMIN_EMAILS }}
+          LOOKBACK_HOURS: '6'
