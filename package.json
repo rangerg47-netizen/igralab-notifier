@@ -1,0 +1,15 @@
+{
+  "name": "igralab-notifier",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Отправка push-уведомлений ИграЛаб без Cloud Functions (бесплатный тариф Firebase)",
+  "engines": { "node": ">=20" },
+  "scripts": {
+    "start": "node server.js",
+    "once": "node once.js",
+    "test": "node test.js"
+  },
+  "dependencies": {
+    "firebase-admin": "^12.7.0"
+  }
+}
